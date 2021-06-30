@@ -7,10 +7,11 @@
         <el-breadcrumb-item>科室管理</el-breadcrumb-item>
         </el-breadcrumb>
         <el-card>
-            <el-input style="width: 300px;" placeholder="请输入科室编号或名称" >
+            <!-- 搜索栏 -->
+            <el-input style="width: 300px;" placeholder="请输入科室编号进行查询" v-model = "queryInfo.query" clearable @clear="getDepList" >
             </el-input>
-            <el-button style="width: 60px;" icon = "el-icon-search"></el-button>
-            <el-button type="primary" >添加科室</el-button>
+            <el-button style="width: 60px;" icon = "el-icon-search" @click ="getDepList"></el-button>
+            <el-button type="primary" @click="addDialogVisible = true">添加科室</el-button>
             <el-table
                 :data="tableData"
                 stripe
@@ -34,8 +35,9 @@
                 label="操作"
                 width="220">
                 <template #default="scope">
-                    <el-button  @click="handleClick(scope.row)" type="primary" round>修改</el-button>
-                    <el-button type="danger" round>删除</el-button>
+                    <!--每一条的删除与修改-->
+                    <el-button  type="primary" @click = "showUpdateDialog(scope.row.id)">修改</el-button>
+                    <el-button type="danger"  @click = "deleteDep(scope.row.id)" >删除</el-button>
                 </template>
                 </el-table-column>
             </el-table>
@@ -49,6 +51,43 @@
                 :total="total">
             </el-pagination>
         </el-card>
+        <!-- 添加科室区域 -->
+        <el-dialog title="添加用户" v-model = "addDialogVisible" width="50%" @close="addDialogClose">
+            <el-form :model = "addForm" :rules = "addFormRules" ref= "addFormRef" label-width="70px">
+                <el-form-item label = "科室编号" label-width="12%" prop = "id">
+                    <el-input v-model = "addForm.id"></el-input>
+                </el-form-item>
+                <el-form-item label = "科室名称" label-width="12%" prop = "name">
+                    <el-input v-model = "addForm.name"></el-input>
+                </el-form-item>
+                <el-form-item label = "科室类别" label-width="12%" prop = "type">
+                    <el-input v-model = "addForm.type"></el-input>
+                </el-form-item>
+                <el-form-item size="large">
+                    <el-button type="primary" @click="addDep">添加</el-button>
+                    <el-button @click="addDialogVisible = false">取消</el-button>
+                </el-form-item>
+            </el-form>
+        </el-dialog>
+        <!-- 修改科室信息 -->
+        <el-dialog title="修改科室信息" v-model = "updateDialogVisible" width="50%" @close="updateDialogClose">
+            <el-form :model = "updateForm" :rules = "updateFormRules" ref= "updateFormRef" label-width="70px">
+                <el-form-item label = "科室编号" label-width="12%" prop = "id">
+                    <el-input v-model = "updateForm.id" disabled></el-input>
+                </el-form-item>
+                <el-form-item label = "科室名称" label-width="12%" prop = "name">
+                    <el-input v-model = "updateForm.name"></el-input>
+                </el-form-item>
+                <el-form-item label = "科室类别" label-width="12%" prop = "type">
+                    <el-input v-model = "updateForm.type"></el-input>
+                </el-form-item>
+                <el-form-item size="large">
+                    <el-button type="primary" @click="updateDep">更改</el-button>
+                    <el-button @click="updateDialogVisible = false">取消</el-button>
+                </el-form-item>
+            </el-form>
+        </el-dialog>
+
     </div>
 </template>
 <script>
@@ -66,21 +105,49 @@ export default {
             departmentList:[],   //用户列表
             total:0,           //总记录数
             tableData:[
-
-            ]
+            ],
+            addDialogVisible: false,  //添加信息的对话框是否可见
+            updateDialogVisible: false, //修改信息的对话框是否可见
+            addForm:{
+                id:'',
+                name:'',
+                type:'',
+            },
+            updateForm:{
+            },
+            //表单验证规则
+            addFormRules:{
+                id: [
+                { required: true, message: '请输入科室编号', trigger: 'blur' },
+                { min: 3, max: 10, message: '长度在3到10之间', trigger: 'blur' }
+                ],
+                name: [
+                { required: true, message: '请输入科室名称', trigger: 'blur' },
+                { min: 3, max: 10, message: '长度在3到10之间', trigger: 'blur' }
+                ],
+                type: [
+                { required: true, message: '请输入科室类型', trigger: 'blur' },
+                { min: 1, max: 10, message: '长度在1到10之间', trigger: 'blur' }
+                ],
+            },
+            updateFormRules:{
+                name: [
+                { required: true, message: '请输入科室名称', trigger: 'blur' },
+                { min: 3, max: 10, message: '长度在3到10之间', trigger: 'blur' }
+                ],
+                type: [
+                { required: true, message: '请输入科室类型', trigger: 'blur' },
+                { min: 1, max: 10, message: '长度在1到10之间', trigger: 'blur' }
+                ],
+            }
         }
     },
     methods:{
         //获取科室列表
         async getDepList(){
-            this.getPath();
-            console.log(this.query);
-            const {data: res} = await this.$http.get(this.query);
+            const {data: res} = await this.$http.get("/allDep",{params:this.queryInfo});
             this.tableData = res.list;
             this.total = res.total;
-        },
-        getPath(){
-            this.query="/allDep/"+this.queryInfo.pageNum+"/"+this.queryInfo.pageSize;
         },
         handleSizeChange(newSize){
             this.queryInfo.pageSize= newSize;
@@ -89,6 +156,59 @@ export default {
         handleCurrentChange(newPage){
             this.queryInfo.pageNum = newPage;
             this.getDepList();
+        },
+        addDialogClose(){
+            this.$refs.addFormRef.resetFields();
+        },
+        addDep(){
+            this.$refs.addFormRef.validate(async valid=>{
+                if(!valid) return;
+                const {data:res} = await this.$http.post("addDep", this.addForm);
+                if(res !="success"){
+                    return this.$message.error("操作失败");
+                }
+                this.$message.success("操作成功");
+                this.addDialogVisible= false;
+                this.getDepList();
+            });
+        },
+        //删除
+        async deleteDep(id){
+            const confirmResult = await this.$confirm('此操作将永久删除该用户，是否继续？', '提示',{
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).catch(err =>err)
+            if(confirmResult != 'confirm'){
+                return this.$message.info("已取消删除");
+            }
+            const {data :res}=await this.$http.delete("deleteDep?id="+id);
+            if (res !="success"){
+                return this.$message.error("操作失败");
+            }
+            this.$message.success("操作成功！");
+            this.getDepList();
+        },
+        //修改
+        updateDialogClose(){
+            this.$refs.updateFormRef.resetFields();
+        },
+        updateDep(){
+            this.$refs.updateFormRef.validate(async valid=>{
+                if(!valid) return;
+                const{data:res} = await this.$http.put("updateDep", this.updateForm);
+                console.log(res);
+                if(res!="success") return this.$message.error("操作失败！！");
+                this.$message.success("操作成功！");
+                this.updateDialogVisible = false;
+                this.getDepList();
+            })
+        },
+        async showUpdateDialog(id){
+            const {data: res} = await this.$http.get("getUpdateDep?id="+id);
+            this.updateForm = res;
+            console.log(this.updateForm);
+            this.updateDialogVisible = true;
         }
     }
 }

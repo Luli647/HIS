@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class QueryInfo {
-    private String id;
+    private String query="";
     private int pageNum = 1;
-    private int pageSize = 10; //每页最大数
+    private int pageSize = 5; //每页最大数
 }
