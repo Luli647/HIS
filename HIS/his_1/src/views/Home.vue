@@ -71,7 +71,7 @@ export default {
 </script>
 <style scoped>
 .el-header{
-    background-color: #044747;
+    background-color: #274c6e;
     display: flex;
     justify-content: space-between;
     padding-right: 0%;

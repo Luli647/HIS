@@ -1,7 +1,9 @@
 package com.example.his_test1.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.example.his_test1.dao.ConstantItemDao;
 import com.example.his_test1.dao.DepartmentDao;
+import com.example.his_test1.entity.ConstantItem;
 import com.example.his_test1.entity.Department;
 import com.example.his_test1.entity.QueryInfo;
 import com.github.pagehelper.PageHelper;
@@ -18,7 +20,8 @@ public class DepartmentController {
 
     @Autowired
     DepartmentDao departmentDao;
-
+    @Autowired
+    ConstantItemDao constantItemDao;
 //    @RequestMapping("/allDep")
 //    public String getDepList(){
 //        int num = departmentDao.getDepNum();
@@ -42,6 +45,13 @@ public class DepartmentController {
     public String addDep(@RequestBody Department dep){
         int i = departmentDao.addDep(dep);
         return i>0? "success": "error";
+    }
+    @RequestMapping("/addDepsearchID")
+    @ResponseBody
+    public String searchID(){
+        List<ConstantItem> it = constantItemDao.getAllConst();
+        String it_json = JSON.toJSONString(it);
+        return it_json;
     }
 
     @RequestMapping("/deleteDep")

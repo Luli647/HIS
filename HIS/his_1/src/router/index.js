@@ -13,7 +13,9 @@ const routes =  [
     redirect: '/mainpage',
     children:[
       {path:'/mainpage',component: () => import(/* webpackChunkName: "about" */ '../views/MainPage.vue')},
-      {path:'/department_mgt',component: () => import(/* webpackChunkName: "about" */ '../views/admin/DepartmentList.vue')}
+      {path:'/department_mgt',component: () => import(/* webpackChunkName: "about" */ '../views/admin/DepartmentList.vue')},
+      {path:'/user_mgt',component: () => import(/* webpackChunkName: "about" */ '../views/admin/UserMgt.vue')},
+      {path:'/scheduling',component: () => import(/* webpackChunkName: "about" */ '../views/admin/Scheduling.vue')},
     ]
   },
   

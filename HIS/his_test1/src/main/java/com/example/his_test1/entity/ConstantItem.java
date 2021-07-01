@@ -3,13 +3,10 @@ package com.example.his_test1.entity;
 import lombok.Data;
 
 @Data
-
-public class Department {
+public class ConstantItem {
     private int id;
-    private String deptCode;
-    private String deptName;
-    private int deptCategoryID;
+    private int constantTypeID;
+    private String constantCode;
     private String constantName;
-    private int deptType;
     private int delMark;
 }

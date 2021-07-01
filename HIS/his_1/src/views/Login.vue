@@ -12,8 +12,8 @@
                 <el-input v-model="loginForm.userName" placeholder="输入id..."></el-input>
             </el-form-item>
             <!--密码-->
-            <el-form-item label="密码" prop="userPassword">
-                <el-input v-model="loginForm.userPassword" placeholder="输入密码..." type="password"></el-input>
+            <el-form-item label="密码" prop="password">
+                <el-input v-model="loginForm.password" placeholder="输入密码..." type="password"></el-input>
             </el-form-item>
             <!--按钮-->
             <el-form-item class="btn">
@@ -35,7 +35,7 @@
             return{
                 loginForm:{
                     userName: "admin",
-                    userPassword: "123456"
+                    password: "123456"
                 },
                 loginFormRules:{
                     //验证用户名和密码的合法性
@@ -60,6 +60,7 @@
                         if( res.flag =="correct"){
                             this.$message.success("操作成功！！");
                             this.$router.push({path:"/home"});
+                            console.log(this.loginForm);
                             window.sessionStorage.setItem("user",res.user);
                         }else{
                             this.$message.error("用户名不存在或密码错误！！！");

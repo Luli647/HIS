@@ -11,24 +11,24 @@
             <el-input style="width: 300px;" placeholder="请输入科室编号进行查询" v-model = "queryInfo.query" clearable @clear="getDepList" >
             </el-input>
             <el-button style="width: 60px;" icon = "el-icon-search" @click ="getDepList"></el-button>
-            <el-button type="primary" @click="addDialogVisible = true">添加科室</el-button>
+            <el-button type="primary" @click="showaddForm">添加科室</el-button>
             <el-table
                 :data="tableData"
                 stripe
                 border
                 style="width: 100%">
                 <el-table-column
-                prop="id"
+                prop="deptCode"
                 label="编号"
                 width="180">
                 </el-table-column>
                 <el-table-column
-                prop="name"
+                prop="deptName"
                 label="科室名称"
                 width="180">
                 </el-table-column>
                 <el-table-column
-                prop="type"
+                prop="constantName"
                 label="类型">
                 </el-table-column>
                 <el-table-column
@@ -36,8 +36,8 @@
                 width="220">
                 <template #default="scope">
                     <!--每一条的删除与修改-->
-                    <el-button  type="primary" @click = "showUpdateDialog(scope.row.id)">修改</el-button>
-                    <el-button type="danger"  @click = "deleteDep(scope.row.id)" >删除</el-button>
+                    <el-button  type="primary" @click = "showUpdateDialog(scope.row.deptCode)">修改</el-button>
+                    <el-button type="danger"  @click = "deleteDep(scope.row.deptCode)" >删除</el-button>
                 </template>
                 </el-table-column>
             </el-table>
@@ -51,38 +51,44 @@
                 :total="total">
             </el-pagination>
         </el-card>
+
         <!-- 添加科室区域 -->
-        <el-dialog title="添加用户" v-model = "addDialogVisible" width="50%" @close="addDialogClose">
+        <el-dialog title="添加科室" v-model = "addDialogVisible" width="50%" @close="addDialogClose">
             <el-form :model = "addForm" :rules = "addFormRules" ref= "addFormRef" label-width="70px">
-                <el-form-item label = "科室编号" label-width="12%" prop = "id">
-                    <el-input v-model = "addForm.id"></el-input>
+                <el-form-item label = "科室编号" label-width="12%" prop = "deptCode">
+                    <el-input v-model = "addForm.deptCode"></el-input>
                 </el-form-item>
-                <el-form-item label = "科室名称" label-width="12%" prop = "name">
-                    <el-input v-model = "addForm.name"></el-input>
+                <el-form-item label = "科室名称" label-width="12%" prop = "deptName">
+                    <el-input v-model = "addForm.deptName"></el-input>
                 </el-form-item>
-                <el-form-item label = "科室类别" label-width="12%" prop = "type">
-                    <el-input v-model = "addForm.type"></el-input>
+                  <el-form-item label="科室类别" label-width="12%" prop = "deptCategoryID" >
+                    <el-select v-model="addForm.deptCategoryID" placeholder="请选择科室类别"  style="width: 100%;">
+                    <el-option v-for="it in constItemList" :key = "it.id" :label = it.constantName :value = it.id></el-option>
+                    </el-select>
                 </el-form-item>
-                <el-form-item size="large">
-                    <el-button type="primary" @click="addDep">添加</el-button>
+                <el-form-item size="large" >
+                    <el-button type="primary" @click="addDep">确定</el-button>
                     <el-button @click="addDialogVisible = false">取消</el-button>
                 </el-form-item>
             </el-form>
         </el-dialog>
+
         <!-- 修改科室信息 -->
         <el-dialog title="修改科室信息" v-model = "updateDialogVisible" width="50%" @close="updateDialogClose">
             <el-form :model = "updateForm" :rules = "updateFormRules" ref= "updateFormRef" label-width="70px">
-                <el-form-item label = "科室编号" label-width="12%" prop = "id">
-                    <el-input v-model = "updateForm.id" disabled></el-input>
+                <el-form-item label = "科室编号" label-width="12%" prop = "deptCode">
+                    <el-input v-model = "updateForm.deptCode" disabled></el-input>
                 </el-form-item>
-                <el-form-item label = "科室名称" label-width="12%" prop = "name">
-                    <el-input v-model = "updateForm.name"></el-input>
+                <el-form-item label = "科室名称" label-width="12%" prop = "deptName">
+                    <el-input v-model = "updateForm.deptName"></el-input>
                 </el-form-item>
-                <el-form-item label = "科室类别" label-width="12%" prop = "type">
-                    <el-input v-model = "updateForm.type"></el-input>
+                <el-form-item label="科室类别" label-width="12%" prop = "deptCategoryID" >
+                    <el-select v-model="updateForm.deptCategoryID" placeholder="请选择科室类别"  style="width: 100%;">
+                    <el-option v-for="it in constItemList" :key = "it.id" :label = it.constantName :value = it.id></el-option>
+                    </el-select>
                 </el-form-item>
                 <el-form-item size="large">
-                    <el-button type="primary" @click="updateDep">更改</el-button>
+                    <el-button type="primary" @click="updateDep">确定修改</el-button>
                     <el-button @click="updateDialogVisible = false">取消</el-button>
                 </el-form-item>
             </el-form>
@@ -109,12 +115,13 @@ export default {
             addDialogVisible: false,  //添加信息的对话框是否可见
             updateDialogVisible: false, //修改信息的对话框是否可见
             addForm:{
-                id:'',
-                name:'',
-                type:'',
+                deptCode:'',
+                deptName:'',
+                deptCategoryID:'',
             },
             updateForm:{
             },
+            constItemList:{},
             //表单验证规则
             addFormRules:{
                 id: [
@@ -126,8 +133,7 @@ export default {
                 { min: 3, max: 10, message: '长度在3到10之间', trigger: 'blur' }
                 ],
                 type: [
-                { required: true, message: '请输入科室类型', trigger: 'blur' },
-                { min: 1, max: 10, message: '长度在1到10之间', trigger: 'blur' }
+                { required: true, message: '请选择科室类型', trigger: 'change' },
                 ],
             },
             updateFormRules:{
@@ -163,7 +169,8 @@ export default {
         addDep(){
             this.$refs.addFormRef.validate(async valid=>{
                 if(!valid) return;
-                const {data:res} = await this.$http.post("addDep", this.addForm);
+                console.log(this.addForm);
+                const {data:res} = await this.$http.post("addDep", this.addForm); 
                 if(res !="success"){
                     return this.$message.error("操作失败");
                 }
@@ -189,11 +196,13 @@ export default {
             this.$message.success("操作成功！");
             this.getDepList();
         },
+
         //修改
         updateDialogClose(){
             this.$refs.updateFormRef.resetFields();
         },
         updateDep(){
+            this.constItemList  = window.sessionStorage.getItem("constantItem");
             this.$refs.updateFormRef.validate(async valid=>{
                 if(!valid) return;
                 const{data:res} = await this.$http.put("updateDep", this.updateForm);
@@ -205,10 +214,19 @@ export default {
             })
         },
         async showUpdateDialog(id){
+            this.getConstList();
             const {data: res} = await this.$http.get("getUpdateDep?id="+id);
             this.updateForm = res;
-            console.log(this.updateForm);
             this.updateDialogVisible = true;
+        },
+        //获取department类别编码对应的类别名，并打开添加表格
+        showaddForm(){
+            this.getConstList();
+            this.addDialogVisible = true;
+        },
+        async getConstList(){
+            const {data: res} = await this.$http.get("addDepsearchID");
+            this.constItemList = res;
         }
     }
 }

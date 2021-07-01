@@ -1,41 +1,20 @@
 package com.example.his_test1.entity;
 
-/**
- * 用户实体
- */
+import lombok.Data;
+
+@Data
 public class User {
+    private int id;
     private String userName;
-    private String userPassword;
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getUserPassword() {
-        return userPassword;
-    }
-
-    public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
-    }
-
-    public User(String userName, String userPassword) {
-        this.userName = userName;
-        this.userPassword = userPassword;
-    }
-
-    public User() {
-    }
-
-    @Override
-    public String toString(){
-        return "User{"+
-                " username ='" +userName +'\'' +
-                ",password ='" + userPassword+'}';
-    }
-
+    private String password;
+    private String realName;
+    private String useType;
+    private int docTitleID;
+    private int docTitle;
+    private String isScheduling;
+    private int deptID;
+    private String dept;
+    private int registLeID;
+    private String registName;
+    private int delMark;
 }

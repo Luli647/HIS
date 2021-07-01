@@ -9,18 +9,26 @@ import java.util.List;
 
 @Repository
 public interface DepartmentDao {
-    @Select("select * from department where id like '%${id}%'")
-    public List<Department> getAllDep(String id);
+    @Select("SELECT DeptCode, DeptName, constantname FROM department LEFT JOIN constantitem ON department.DeptCategoryID = constantitem.ID where DeptCode like '%${deptCode}%'")
+    @Results(value = {
+            //property是实体类中定义的
+            @Result(column = "deptCode", property = "deptCode"),
+            @Result(column = "deptName", property = "deptName"),
+            @Result(column = "constantName", property = "constantName"),
+    })
+    List<Department> getAllDep(String deptCode);
 
-    @Insert("insert into department(id,name,type) values(#{id}, #{name}, #{type})")
-    public int addDep(Department dep);
 
-    @Delete("delete from department where id = #{id}")
-    public int deleteDep(String id);
+    @Insert("insert into department(DeptCode,DeptName,DeptCategoryID) values(#{deptCode}, #{deptName}, #{deptCategoryID})")
+    @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
+    int addDep(Department dep);
 
-    @Update("update department set name = #{name}, type = #{type} where id = #{id}")
-    public int updateDep(Department dep);
+    @Delete("delete from department where DeptCode = #{deptCode}")
+    int deleteDep(String deptCode);
 
-    @Select("select * from department where id = #{id}")
-    public Department getUpdateDep(String id);
+    @Update("update department set deptName = #{deptName}, deptCategoryID = #{deptCategoryID} where deptCode = #{deptCode}")
+    int updateDep(Department dep);
+
+    @Select("select * from department where DeptCode = #{deptCode}")
+    public Department getUpdateDep(String deptCode);
 }
