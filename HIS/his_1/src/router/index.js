@@ -16,6 +16,7 @@ const routes =  [
       {path:'/department_mgt',component: () => import(/* webpackChunkName: "about" */ '../views/admin/DepartmentList.vue')},
       {path:'/user_mgt',component: () => import(/* webpackChunkName: "about" */ '../views/admin/UserMgt.vue')},
       {path:'/scheduling',component: () => import(/* webpackChunkName: "about" */ '../views/admin/Scheduling.vue')},
+      {path:'/fmeditem_mgt',component: () => import(/* webpackChunkName: "about" */ '../views/admin/Fmeditem.vue')},
     ]
   },
   

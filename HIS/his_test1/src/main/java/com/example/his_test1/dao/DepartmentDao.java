@@ -31,4 +31,7 @@ public interface DepartmentDao {
 
     @Select("select * from department where DeptCode = #{deptCode}")
     public Department getUpdateDep(String deptCode);
+
+    @Select("select id, deptName from department")
+    List<Department> getdepList();
 }

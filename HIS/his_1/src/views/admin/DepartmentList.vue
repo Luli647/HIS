@@ -115,24 +115,21 @@ export default {
             addDialogVisible: false,  //添加信息的对话框是否可见
             updateDialogVisible: false, //修改信息的对话框是否可见
             addForm:{
-                deptCode:'',
-                deptName:'',
-                deptCategoryID:'',
             },
             updateForm:{
             },
             constItemList:{},
             //表单验证规则
             addFormRules:{
-                id: [
+                deptCode: [
                 { required: true, message: '请输入科室编号', trigger: 'blur' },
                 { min: 3, max: 10, message: '长度在3到10之间', trigger: 'blur' }
                 ],
-                name: [
+                deptName: [
                 { required: true, message: '请输入科室名称', trigger: 'blur' },
                 { min: 3, max: 10, message: '长度在3到10之间', trigger: 'blur' }
                 ],
-                type: [
+                deptCategoryID: [
                 { required: true, message: '请选择科室类型', trigger: 'change' },
                 ],
             },
