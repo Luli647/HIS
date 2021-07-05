@@ -2,6 +2,7 @@ package com.example.his_test1.dao;
 
 import com.example.his_test1.entity.Department;
 import com.example.his_test1.entity.QueryInfo;
+import com.example.his_test1.entity.RegistDep;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -34,4 +35,13 @@ public interface DepartmentDao {
 
     @Select("select id, deptName from department")
     List<Department> getdepList();
+
+    //为挂号获取院系列表
+    @Select("select * from constantitem where id<27")
+    @Results(value={
+            @Result(column = "constantName", property = "text"),
+            @Result(property = "children", column = "id",
+            many = @Many(select = "com.example.his_test1.dao.SubDepDao.findAll"))
+    })
+    List<RegistDep> getAllDeps();
 }

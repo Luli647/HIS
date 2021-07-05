@@ -12,10 +12,10 @@ import java.util.List;
 @Repository
 public interface MenuDao {
     @Select("select * from adminmainmenu")
-    @Results(value = {
-            @Result(id = true, column = "id", property = "id"),
-            @Result(column = "title", property = "title"),
+    @Results(value = {            @Result(column = "title", property = "title"),
             @Result(column = "path", property = "path"),
+            @Result(id = true, column = "id", property = "id"),
+
             @Result(property = "subList", column = "id",
                     many = @Many(select = "com.example.his_test1.dao.SubMenuDao.findAll" )
             )

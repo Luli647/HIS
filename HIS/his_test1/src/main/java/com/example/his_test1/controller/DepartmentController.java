@@ -6,6 +6,7 @@ import com.example.his_test1.dao.DepartmentDao;
 import com.example.his_test1.entity.ConstantItem;
 import com.example.his_test1.entity.Department;
 import com.example.his_test1.entity.QueryInfo;
+import com.example.his_test1.entity.RegistDep;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,5 +74,12 @@ public class DepartmentController {
         Department dep = departmentDao.getUpdateDep(id);
         String dep_json = JSON.toJSONString(dep);
         return dep_json;
+    }
+
+
+    @RequestMapping("/getAllDeps")
+    public String getAllDeps(){
+        System.out.println(departmentDao.getAllDeps());
+        return "yes";
     }
 }
