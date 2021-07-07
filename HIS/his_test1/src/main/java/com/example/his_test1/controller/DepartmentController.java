@@ -79,7 +79,7 @@ public class DepartmentController {
 
     @RequestMapping("/getAllDeps")
     public String getAllDeps(){
-        System.out.println(departmentDao.getAllDeps());
-        return "yes";
+        String deps_json = JSON.toJSONString(departmentDao.getAllDeps());
+        return deps_json;
     }
 }

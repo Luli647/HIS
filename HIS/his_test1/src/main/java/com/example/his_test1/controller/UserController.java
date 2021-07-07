@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.example.his_test1.dao.ConstantItemDao;
 import com.example.his_test1.dao.DepartmentDao;
+import com.example.his_test1.dao.UserDao;
 import com.example.his_test1.entity.*;
 import com.example.his_test1.service.RegistLevelService;
 import com.example.his_test1.service.UserService;
@@ -69,8 +70,8 @@ public class UserController {
         return usr_json;
     }
     @GetMapping("/getUserForSch")
-    public String getUserForSch(Doctor user){
-        List<Doctor> users = userService.getUserForSch(user);
+    public String getUserForSch(User user){
+        List<User> users = userService.getUserForSch(user);
         String users_json = JSON.toJSONString(users);
         return users_json;
     }
@@ -84,6 +85,19 @@ public class UserController {
         String str = i >0? "success":"error";
         return str;
     }
-
+    @Autowired
+    UserDao userdao;
+    @GetMapping("/userRegist1")
+    public String userRegist1(int deptID, int k){
+        List<DocAvailable> users = userdao.getUserName21(deptID);
+        String doc_json = JSON.toJSONString(users);
+        return doc_json;
+    }
+    @GetMapping("/userRegist2")
+    public String userRegist2(int deptID, int k){
+        List<DocAvailable> users = userdao.getUserName22(deptID);
+        String doc_json = JSON.toJSONString(users);
+        return doc_json;
+    }
 
 }

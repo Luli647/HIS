@@ -1,8 +1,5 @@
 <template>
-<el-button @click="addRuleVisible=true">
-    添加排班规则
-</el-button>
-<el-dialog v-model="addRuleVisible" @close="addRuleClose" width="85%">
+
     <el-card>
     新增排班规则
     <el-form :model="searchForm" ref="addRuleRef" label-width="80px">
@@ -97,12 +94,10 @@
             </el-table-column>
             
         </el-table>
-        <el-button @click="addRule" >确定</el-button>
+        <el-button @click="addRule" >确认更改</el-button>
     </el-form>
 </el-card>
-</el-dialog>
 
-    
 </template>
 <script>
 export default{

@@ -1,5 +1,6 @@
 package com.example.his_test1.dao;
 
+import com.example.his_test1.entity.DocAvailable;
 import com.example.his_test1.entity.Doctor;
 import com.example.his_test1.entity.User;
 import org.apache.ibatis.annotations.*;
@@ -46,9 +47,29 @@ public interface UserDao {
 //    List<Doctor> getUserForSch(Doctor user);
 
     @Select("select * from user u left join scheduleList s on u.userName=s.userName where deptID = #{deptID} and registLeID = #{registLeID}")
-    List<Doctor> getUserForSch(Doctor user);
+    List<User> getUserForSch(User user);
 
     @Insert("insert into schedulelist(userName, sunMorning, sunAfternoon, monMorning, monAfternoon,tuesMorning, tuesAfternoon,wedsMorning,wedsAfternoon, thursMorning,thursAfternoon, friMorning,friAfternoon, satMorning,satAfternoon) values(#{userName}, #{sunMorning}, #{sunAfternoon}, #{monMorning}, #{monAfternoon},#{tuesMorning}, #{tuesAfternoon},#{wedsMorning},#{wedsAfternoon}, #{thursMorning},#{thursAfternoon}, #{friMorning},#{friAfternoon}, #{satMorning},#{satAfternoon})")
     @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
     int addSchedule(User doc);
+
+    //挂号功能
+    @Select("select realName, u.userName from schedulelist s left join user u on u.userName = s.userName where deptID = #{deptID} and s.tuesMorning=true ")
+    @Results(value = {
+            @Result(column = "realName", property = "title"),
+            @Result(column = "userName", property = "value"),
+    })
+    List<DocAvailable> getUserName21(int deptID);
+
+    @Select("select realName, u.userName from schedulelist s left join user u on u.userName = s.userName where deptID = #{deptID} and s.tuesAfternoon=true ")
+    @Results(value = {
+            @Result(column = "realName", property = "title"),
+            @Result(column = "userName", property = "value"),
+    })
+    List<DocAvailable> getUserName22(int deptID);
+
+    @Select("select * from schedulelist where userName = #{userName}")
+    User getDoc(String userName);
+
+
 }

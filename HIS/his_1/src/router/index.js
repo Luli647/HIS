@@ -17,6 +17,8 @@ const routes =  [
       {path:'/user_mgt',component: () => import(/* webpackChunkName: "about" */ '../views/admin/UserMgt.vue')},
       {path:'/scheduling',component: () => import(/* webpackChunkName: "about" */ '../views/admin/Scheduling.vue')},
       {path:'/fmeditem_mgt',component: () => import(/* webpackChunkName: "about" */ '../views/admin/Fmeditem.vue')},
+      {path:'/disease_mgt',component: () => import(/* webpackChunkName: "about" */ '../views/admin/Disease.vue')},
+      {path:'/registLevel_mgt',component: () => import(/* webpackChunkName: "about" */ '../views/admin/RegistLe.vue')},
     ]
   },
   

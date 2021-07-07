@@ -87,7 +87,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item size="large" >
-                    <el-button type="primary" @click="updateUser">确定</el-button>
+                    <el-button type="primary" @click="addUser">确定</el-button>
                     <el-button @click="addDialogVisible = false">取消</el-button>
                 </el-form-item>
             </el-form>

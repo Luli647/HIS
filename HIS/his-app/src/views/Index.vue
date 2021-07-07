@@ -57,6 +57,7 @@ export default {
     methods:{
         async userLogin(){
             console.log(this.state);
+            window.sessionStorage.setItem("user", this.state.userName);
             const {data:res}=await this.$http.post("/userLogin", this.state);
             console.log(res);
             if( res =="success"){

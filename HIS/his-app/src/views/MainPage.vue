@@ -4,7 +4,7 @@
         <div class="swipePart">
             <van-swipe :autoplay="3000" lazy-render>
                 <van-swipe-item v-for="image in images" :key="image">
-                    <img class="image" :src="image" />
+                    <van-image class="image" :src="image" />
                 </van-swipe-item>
             </van-swipe>
         </div>
@@ -23,8 +23,8 @@
 export default {
     setup() {
     const images = [
-      'https://img.yzcdn.cn/vant/apple-1.jpg',
-      'https://img.yzcdn.cn/vant/apple-2.jpg',
+        require('../assets/image1.png'),
+        require('../assets/image2.png'),
     ];
     return { images };
   },

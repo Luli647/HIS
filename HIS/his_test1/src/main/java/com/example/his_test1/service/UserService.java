@@ -1,6 +1,7 @@
 package com.example.his_test1.service;
 
 import com.example.his_test1.dao.UserDao;
+import com.example.his_test1.entity.DocAvailable;
 import com.example.his_test1.entity.Doctor;
 import com.example.his_test1.entity.QueryInfo;
 import com.example.his_test1.entity.User;
@@ -12,7 +13,7 @@ import java.util.List;
 @Service
 public class UserService {
     @Autowired
-    private UserDao userDao;
+    UserDao userDao;
 
     public String loginService(User user){
         if(userDao.selectByName(user.getUserName()).equals(user.getPassword())){
@@ -43,7 +44,7 @@ public class UserService {
         return userDao.getUser(userName);
     }
 
-    public List<Doctor> getUserForSch(Doctor user){
+    public List<User> getUserForSch(User user){
         return userDao.getUserForSch(user);
     }
 
@@ -56,5 +57,9 @@ public class UserService {
         if(count==docs.size()) return 1;
         else return 0;
     }
+
+    //为挂号获取排班信息
+
+
 
 }

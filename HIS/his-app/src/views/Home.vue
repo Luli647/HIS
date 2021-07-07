@@ -1,7 +1,7 @@
 <template>
     <div class="homePage">
          <van-nav-bar
-            title="社区医院挂号"
+            title="社区医院挂号APP"
         />
         <van-tabbar v-model="active">
             <van-tabbar-item icon="home-o" to="/mainPage">主界面</van-tabbar-item>

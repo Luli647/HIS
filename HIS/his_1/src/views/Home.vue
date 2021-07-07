@@ -10,7 +10,7 @@
         <el-container >
             <!-- 侧边栏 -->
             <el-aside width="200px">
-                <el-menu :uniqueOpened="true"
+                <el-menu 
                         class="el-menu-vertical-demo"
                         background-color="#545c64"
                         text-color="#fff"
