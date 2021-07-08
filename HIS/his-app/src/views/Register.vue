@@ -40,8 +40,7 @@ export default {
         },
         onitemClick(data){
             window.sessionStorage.setItem("data",data.id);
-            window.sessionStorage.setItem("dept",data.text);
-            console.log(data);
+            window.sessionStorage.setItem("deptID",data.id);
             this.$router.push({path:"/registByDep"});
         },
         async getDep(){

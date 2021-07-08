@@ -14,6 +14,9 @@ public interface UserDao {
     @Select("select Password from user where UserName=#{userName}")
     String selectByName(String userName);
 
+    @Select("select useType from user where userName  = #{userName}")
+    int selectUserType(User user);
+
     @Select("select u.username, u.realname, u.usetype,u.deptID, d.deptname,u.registLeID, r.registname from user u left join department d on u.deptid=d.id left join registlevel r on u.registLeID = r.id where userName like '%${userName}%'")
     @Results(value={
             @Result(column = "userName", property = "userName"),
@@ -54,17 +57,19 @@ public interface UserDao {
     int addSchedule(User doc);
 
     //挂号功能
-    @Select("select realName, u.userName from schedulelist s left join user u on u.userName = s.userName where deptID = #{deptID} and s.tuesMorning=true ")
+    @Select("select realName, u.userName, u.id from schedulelist s left join user u on u.userName = s.userName where deptID = #{deptID} and s.tuesMorning=true ")
     @Results(value = {
             @Result(column = "realName", property = "title"),
             @Result(column = "userName", property = "value"),
+            @Result(column = "id", property = "userID"),
     })
     List<DocAvailable> getUserName21(int deptID);
 
-    @Select("select realName, u.userName from schedulelist s left join user u on u.userName = s.userName where deptID = #{deptID} and s.tuesAfternoon=true ")
+    @Select("select realName, u.userName, u.id from schedulelist s left join user u on u.userName = s.userName where deptID = #{deptID} and s.tuesAfternoon=true ")
     @Results(value = {
             @Result(column = "realName", property = "title"),
             @Result(column = "userName", property = "value"),
+            @Result(column = "id", property = "userID"),
     })
     List<DocAvailable> getUserName22(int deptID);
 

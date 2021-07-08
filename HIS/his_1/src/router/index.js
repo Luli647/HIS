@@ -21,7 +21,11 @@ const routes =  [
       {path:'/registLevel_mgt',component: () => import(/* webpackChunkName: "about" */ '../views/admin/RegistLe.vue')},
     ]
   },
-  
+  {
+    path: '/drug_mgt',
+    name: 'drug',
+    component: () => import(/* webpackChunkName: "about" */ '../views/DrugManagement.vue')
+  },
 ]
 
 const router = createRouter({

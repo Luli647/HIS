@@ -59,8 +59,11 @@
                         const {data:res}=await this.$http.post("login", this.loginForm);
                         if( res.flag =="correct"){
                             this.$message.success("操作成功！！");
+                            const{ data: res1 } = await this.$http.post("getUserType", this.loginForm);
+                            if(res1==1)
                             this.$router.push({path:"/home"});
-                            console.log(this.loginForm);
+                            if(res1==5)
+                            this.$router.push({path:"/drug_mgt"});
                             window.sessionStorage.setItem("user",res.user);
                         }else{
                             this.$message.error("用户名不存在或密码错误！！！");

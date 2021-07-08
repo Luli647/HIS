@@ -16,6 +16,7 @@ public class LoginController {
 
    @Autowired
     private UserService userService;
+   @Autowired
     private UserDao userDao;
 
     @RequestMapping("/login")
@@ -27,6 +28,11 @@ public class LoginController {
         res.put("user", user);
         String res_json = JSON.toJSONString(res);
         return res_json;
+    }
+
+    @RequestMapping("/getUserType")
+    public int loginType(@RequestBody User user){
+        return userDao.selectUserType(user);
     }
 
 

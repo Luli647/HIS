@@ -8,10 +8,10 @@
         </el-breadcrumb>
         <el-card>
             <!-- 搜索栏 -->
-            <el-input style="width: 300px;" placeholder="请输入项目编号进行查询" v-model = "queryInfo.query" clearable @clear="getitemList" >
+            <el-input style="width: 300px;" placeholder="请输入项目编号进行查询" v-model = "queryInfo.query" clearable @clear="getItemList" >
             </el-input>
-            <el-button style="width: 60px;" icon = "el-icon-search" @click ="getitemList"></el-button>
-            <el-button type="primary" @click="addDialogVisible=true">添加用户</el-button>
+            <el-button style="width: 60px;" icon = "el-icon-search" @click ="getItemList"></el-button>
+            <el-button type="primary" @click="addDialogVisible=true">添加项目</el-button>
             <!--查询表格-->
             <el-table
                 :data="tableData"
@@ -55,13 +55,54 @@
                 :total="total">
             </el-pagination>
         </el-card>
+        <el-dialog title="添加项目信息" v-model = "addDialogVisible" width="50%" @close="addDialogClose">
+            <el-form :model = "addForm" :rules = "addFormRules" ref= "addFormRef" label-width="70px">
+                <el-form-item label = "项目编码" label-width="12%" prop = "itemCode">
+                    <el-input v-model = "addForm.itemCode"></el-input>
+                </el-form-item>
+                <el-form-item label = "项目名称" label-width="12%" prop = "itemName">
+                    <el-input v-model = "addForm.itemName"></el-input>
+                </el-form-item>
+                <el-form-item label = "单位" label-width="12%" prop = "fromat">
+                    <el-input v-model = "addForm.format"></el-input>
+                </el-form-item>
+                <el-form-item label = "价格" label-width="12%" prop = "price">
+                    <el-input v-model = "addForm.price"></el-input>
+                </el-form-item>
+                <el-form-item size="large" >
+                    <el-button type="primary" @click="addItem">确定</el-button>
+                    <el-button @click="addDialogVisible = false">取消</el-button>
+                </el-form-item>
+            </el-form>
+        </el-dialog>
+
+        <el-dialog title="修改项目信息" v-model = "updateDialogVisible" width="50%" @close="updateDialogClose">
+            <el-form :model = "updateForm" :rules = "updateFormRules" ref= "updateFormRef" label-width="70px">
+                <el-form-item label = "项目编码" label-width="12%" prop = "itemCode">
+                    <el-input v-model = "updateForm.itemCode" disabled></el-input>
+                </el-form-item>
+                <el-form-item label = "项目名" label-width="12%" prop = "itemName">
+                    <el-input v-model = "updateForm.itemName"></el-input>
+                </el-form-item>
+                <el-form-item label = "单位" label-width="12%" prop = "format">
+                    <el-input v-model = "updateForm.format" ></el-input>
+                </el-form-item>
+               <el-form-item label = "价格" label-width="12%" prop = "price">
+                    <el-input v-model = "updateForm.price" ></el-input>
+                </el-form-item>
+                <el-form-item size="large" >
+                    <el-button type="primary" @click="updateItem">确定修改</el-button>
+                    <el-button @click="updateDialogVisible = false">取消</el-button>
+                </el-form-item>
+            </el-form>
+        </el-dialog>
     </div>
 
 </template>
 <script>
 export default{
     created(){
-
+        this.getItemList();
     },
     data(){
         return{
@@ -98,6 +139,57 @@ export default{
             const {data: res} = await this.$http.get("/allItems",{params:this.queryInfo});
             this.tableData = res.list;
             this.total = res.total;
+        },
+        async deleteitem(item){
+            const confirmResult = await this.$confirm('此操作将永久删除该项目，是否继续？', '提示',{
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).catch(err =>err)
+            if(confirmResult != 'confirm'){
+                return this.$message.info("已取消删除");
+            }
+            const {data :res}=await this.$http.delete("deleteItem?itemCode="+item);
+            if (res !="success"){
+                return this.$message.error("操作失败");
+            }
+            this.$message.success("操作成功！");
+            this.getItemList();
+        },
+        handleSizeChange(newSize){
+            this.queryInfo.pageSize= newSize;
+            this.getItemList()
+        },
+        handleCurrentChange(newPage){
+            this.queryInfo.pageNum = newPage;
+            this.getItemList();
+        },
+        addItem(){
+            this.$refs.addFormRef.validate(async valid=>{
+                if(!valid) return;
+                const {data:res} = await this.$http.post("addItem",this.addForm); 
+                if(res !="success"){
+                    return this.$message.error("操作失败");
+                }
+                this.$message.success("操作成功");
+                this.addDialogVisible= false;
+                this.getItemList();
+            });
+        },
+        async showUpdateDialog(itemCode){
+            const {data: res} = await this.$http.get("getItem?itemCode="+itemCode);
+            this.updateForm = res;
+            this.updateDialogVisible = true;
+        },
+        updateItem(){
+            this.$refs.updateFormRef.validate(async valid=>{
+                if(!valid) return;
+                const{data:res} = await this.$http.put("updateItem", this.updateForm);
+                if(res!="success") return this.$message.error("操作失败！！");
+                this.$message.success("操作成功！");
+                this.updateDialogVisible = false;
+                this.getItemList();
+            })
         },
     }
 

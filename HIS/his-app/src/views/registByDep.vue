@@ -17,10 +17,10 @@
                         :key="it.value"
                         :title= it.title
                         value ="预约挂号"
-                        :id="it.value"
+                        :id="it.userID"
                         
                         is-link
-                        @click="onCellClick"
+                        @click="onCellClick1"
                         />
                     </div>
                     <van-divider />
@@ -32,8 +32,8 @@
                         :title= it.title
                         value ="预约挂号"
                         is-link
-                        :id="it.title"
-                        @click="onCellClick"
+                        :id="it.userID"
+                        @click="onCellClick2"
                     />
                 </div>
                 </div>
@@ -84,6 +84,7 @@ export default{
             console.log(this.deptID);
             const {data: res1} = await this.$http.get("/userRegist1?deptID="+this.deptID+"&k="+name);
             this.morning = res1;
+            console.log(res1);
             const {data: res2} = await this.$http.get("/userRegist2?deptID="+this.deptID+"&k="+name);
             this.afternoon = res2;
          
@@ -110,10 +111,19 @@ export default{
             }
             
         },
-        onCellClick(e){
+        onCellClick1(e){
             this.$router.push({path:"/confirmRegist"});
             console.log(e.currentTarget.id);
-            window.sessionStorage.setItem("doc",e.currentTarget.id);
+            window.sessionStorage.setItem("noon", "上午");
+            window.sessionStorage.setItem("userID", e.currentTarget.id);
+            window.sessionStorage.setItem("registTime",new Date());
+        },
+        onCellClick2(e){
+            this.$router.push({path:"/confirmRegist"});
+            console.log(e.currentTarget.id);
+            window.sessionStorage.setItem("noon", "下午");
+            window.sessionStorage.setItem("userID", e.currentTarget.id);
+            window.sessionStorage.setItem("registTime",new Date());
         }
     },
 

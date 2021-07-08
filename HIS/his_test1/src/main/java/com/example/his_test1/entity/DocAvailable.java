@@ -6,9 +6,6 @@ import lombok.Data;
 public class DocAvailable {
     private String title;
     private String value;
+    private int userID;
 
-    public DocAvailable(String realName, String userName) {
-        this.setTitle(realName);
-        this.setValue(userName);
-    }
 }
