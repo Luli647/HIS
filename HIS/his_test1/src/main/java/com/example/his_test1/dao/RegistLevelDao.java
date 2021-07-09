@@ -10,4 +10,5 @@ import java.util.List;
 public interface RegistLevelDao {
     @Select("select id, registname from registlevel")
     List<RegistLevel> getRegistLeList();
+
 }

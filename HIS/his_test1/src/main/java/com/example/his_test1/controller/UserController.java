@@ -89,13 +89,55 @@ public class UserController {
     UserDao userdao;
     @GetMapping("/userRegist1")
     public String userRegist1(int deptID, int k){
-        List<DocAvailable> users = userdao.getUserName21(deptID);
+        List<DocAvailable> users;
+        if(k==1){
+            users = userdao.getUserName11(deptID);
+        }
+        if(k==2){
+             users = userdao.getUserName21(deptID);
+        }
+        if(k==3){
+            users = userdao.getUserName31(deptID);
+        }
+        if(k==4){
+            users = userdao.getUserName41(deptID);
+        }
+        if(k==5){
+            users = userdao.getUserName51(deptID);
+        }
+        if(k==6){
+            users = userdao.getUserName61(deptID);
+        }
+        else{
+            users = userdao.getUserName1(deptID);
+        }
         String doc_json = JSON.toJSONString(users);
         return doc_json;
     }
     @GetMapping("/userRegist2")
     public String userRegist2(int deptID, int k){
-        List<DocAvailable> users = userdao.getUserName22(deptID);
+        List<DocAvailable> users ;
+        if(k==1){
+            users = userdao.getUserName12(deptID);
+        }
+        if(k==2){
+            users = userdao.getUserName22(deptID);
+        }
+        if(k==3){
+            users = userdao.getUserName32(deptID);
+        }
+        if(k==4){
+            users = userdao.getUserName42(deptID);
+        }
+        if(k==5){
+            users = userdao.getUserName52(deptID);
+        }
+        if(k==6){
+            users = userdao.getUserName62(deptID);
+        }
+        else{
+            users = userdao.getUserName2(deptID);
+        }
         String doc_json = JSON.toJSONString(users);
         return doc_json;
     }

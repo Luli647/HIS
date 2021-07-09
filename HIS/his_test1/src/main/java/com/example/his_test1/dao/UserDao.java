@@ -57,24 +57,132 @@ public interface UserDao {
     int addSchedule(User doc);
 
     //挂号功能
-    @Select("select realName, u.userName, u.id from schedulelist s left join user u on u.userName = s.userName where deptID = #{deptID} and s.tuesMorning=true ")
+    @Select("select realName, u.userName, u.id, u.registLeID from schedulelist s left join user u on u.userName = s.userName where deptID = #{deptID} and s.tuesMorning=true ")
     @Results(value = {
             @Result(column = "realName", property = "title"),
             @Result(column = "userName", property = "value"),
             @Result(column = "id", property = "userID"),
+            @Result(column = "registLeID", property = "registLeID"),
     })
     List<DocAvailable> getUserName21(int deptID);
 
-    @Select("select realName, u.userName, u.id from schedulelist s left join user u on u.userName = s.userName where deptID = #{deptID} and s.tuesAfternoon=true ")
+    @Select("select realName, u.userName, u.id, u.registLeID from schedulelist s left join user u on u.userName = s.userName where deptID = #{deptID} and s.tuesAfternoon=true ")
     @Results(value = {
             @Result(column = "realName", property = "title"),
             @Result(column = "userName", property = "value"),
             @Result(column = "id", property = "userID"),
+            @Result(column = "registLeID", property = "registLeID"),
     })
     List<DocAvailable> getUserName22(int deptID);
+    @Select("select realName, u.userName, u.id, u.registLeID from schedulelist s left join user u on u.userName = s.userName where deptID = #{deptID} and s.wedsMorning=true ")
+    @Results(value = {
+            @Result(column = "realName", property = "title"),
+            @Result(column = "userName", property = "value"),
+            @Result(column = "id", property = "userID"),
+            @Result(column = "registLeID", property = "registLeID"),
+    })
+    List<DocAvailable> getUserName31(int deptID);
+
+    @Select("select realName, u.userName, u.id, u.registLeID from schedulelist s left join user u on u.userName = s.userName where deptID = #{deptID} and s.wedsAfternoon=true ")
+    @Results(value = {
+            @Result(column = "realName", property = "title"),
+            @Result(column = "userName", property = "value"),
+            @Result(column = "id", property = "userID"),
+            @Result(column = "registLeID", property = "registLeID"),
+    })
+    List<DocAvailable> getUserName32(int deptID);
+    @Select("select realName, u.userName, u.id, u.registLeID from schedulelist s left join user u on u.userName = s.userName where deptID = #{deptID} and s.thursMorning=true ")
+    @Results(value = {
+            @Result(column = "realName", property = "title"),
+            @Result(column = "userName", property = "value"),
+            @Result(column = "id", property = "userID"),
+            @Result(column = "registLeID", property = "registLeID"),
+    })
+    List<DocAvailable> getUserName41(int deptID);
+
+    @Select("select realName, u.userName, u.id, u.registLeID from schedulelist s left join user u on u.userName = s.userName where deptID = #{deptID} and s.thursAfternoon=true ")
+    @Results(value = {
+            @Result(column = "realName", property = "title"),
+            @Result(column = "userName", property = "value"),
+            @Result(column = "id", property = "userID"),
+            @Result(column = "registLeID", property = "registLeID"),
+    })
+    List<DocAvailable> getUserName42(int deptID);
+    @Select("select realName, u.userName, u.id, u.registLeID from schedulelist s left join user u on u.userName = s.userName where deptID = #{deptID} and s.friMorning=true ")
+    @Results(value = {
+            @Result(column = "realName", property = "title"),
+            @Result(column = "userName", property = "value"),
+            @Result(column = "id", property = "userID"),
+            @Result(column = "registLeID", property = "registLeID"),
+    })
+    List<DocAvailable> getUserName51(int deptID);
+
+    @Select("select realName, u.userName, u.id, u.registLeID from schedulelist s left join user u on u.userName = s.userName where deptID = #{deptID} and s.friAfternoon=true ")
+    @Results(value = {
+            @Result(column = "realName", property = "title"),
+            @Result(column = "userName", property = "value"),
+            @Result(column = "id", property = "userID"),
+            @Result(column = "registLeID", property = "registLeID"),
+    })
+    List<DocAvailable> getUserName52(int deptID);
+    @Select("select realName, u.userName, u.id, u.registLeID from schedulelist s left join user u on u.userName = s.userName where deptID = #{deptID} and s.satMorning=true ")
+    @Results(value = {
+            @Result(column = "realName", property = "title"),
+            @Result(column = "userName", property = "value"),
+            @Result(column = "id", property = "userID"),
+            @Result(column = "registLeID", property = "registLeID"),
+    })
+    List<DocAvailable> getUserName61(int deptID);
+
+    @Select("select realName, u.userName, u.id, u.registLeID from schedulelist s left join user u on u.userName = s.userName where deptID = #{deptID} and s.satAfternoon=true ")
+    @Results(value = {
+            @Result(column = "realName", property = "title"),
+            @Result(column = "userName", property = "value"),
+            @Result(column = "id", property = "userID"),
+            @Result(column = "registLeID", property = "registLeID"),
+    })
+    List<DocAvailable> getUserName62(int deptID);
+
+    @Select("select realName, u.userName, u.id, u.registLeID from schedulelist s left join user u on u.userName = s.userName where deptID = #{deptID} and s.monMorning=true ")
+    @Results(value = {
+            @Result(column = "realName", property = "title"),
+            @Result(column = "userName", property = "value"),
+            @Result(column = "id", property = "userID"),
+            @Result(column = "registLeID", property = "registLeID"),
+    })
+    List<DocAvailable> getUserName11(int deptID);
+
+    @Select("select realName, u.userName, u.id, u.registLeID from schedulelist s left join user u on u.userName = s.userName where deptID = #{deptID} and s.monAfternoon=true ")
+    @Results(value = {
+            @Result(column = "realName", property = "title"),
+            @Result(column = "userName", property = "value"),
+            @Result(column = "id", property = "userID"),
+            @Result(column = "registLeID", property = "registLeID"),
+    })
+    List<DocAvailable> getUserName12(int deptID);
+
+    @Select("select realName, u.userName, u.id, u.registLeID from schedulelist s left join user u on u.userName = s.userName where deptID = #{deptID} and s.sunMorning=true ")
+    @Results(value = {
+            @Result(column = "realName", property = "title"),
+            @Result(column = "userName", property = "value"),
+            @Result(column = "id", property = "userID"),
+            @Result(column = "registLeID", property = "registLeID"),
+    })
+    List<DocAvailable> getUserName1(int deptID);
+
+    @Select("select realName, u.userName, u.id, u.registLeID from schedulelist s left join user u on u.userName = s.userName where deptID = #{deptID} and s.sunAfternoon=true ")
+    @Results(value = {
+            @Result(column = "realName", property = "title"),
+            @Result(column = "userName", property = "value"),
+            @Result(column = "id", property = "userID"),
+            @Result(column = "registLeID", property = "registLeID"),
+    })
+    List<DocAvailable> getUserName2(int deptID);
 
     @Select("select * from schedulelist where userName = #{userName}")
     User getDoc(String userName);
 
+    @Select("select registLeID from user where id = #{userID}")
+    int getRegistLeID(int userID);
 
 }

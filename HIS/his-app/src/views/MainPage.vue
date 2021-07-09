@@ -12,9 +12,7 @@
         <div>
             <van-grid :column-num="2">
                 <van-grid-item icon="description" text="预约挂号" to="/register" />
-                <van-grid-item icon="search" text="检验结果查询" to="/results" />
-                <van-grid-item icon="gold-coin-o" text="门诊缴费" tp="/pay" />
-                <van-grid-item icon="contact" text="在线客服" tp="/customer" />
+                <van-grid-item icon="contact" text="Q&A" to="/customer" />
             </van-grid>
         </div>
     </div>

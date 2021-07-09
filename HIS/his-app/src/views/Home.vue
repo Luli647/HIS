@@ -3,6 +3,10 @@
          <van-nav-bar
             title="社区医院挂号APP"
         />
+        <van-notice-bar
+        left-icon="volume-o"
+        text="防控新冠疫情，人人有责。"
+        />
         <van-tabbar v-model="active">
             <van-tabbar-item icon="home-o" to="/mainPage">主界面</van-tabbar-item>
             <van-tabbar-item icon="friends-o" to="/msg" >消息</van-tabbar-item>

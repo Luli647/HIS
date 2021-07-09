@@ -45,6 +45,11 @@ const routes = [
     name: 'confirm',
     component: () => import('../views/confirmRegist.vue')
   },
+  {
+    path: '/customer',
+    name: 'cs',
+    component: () => import('../views/Customer.vue')
+  },
   
  
 ]

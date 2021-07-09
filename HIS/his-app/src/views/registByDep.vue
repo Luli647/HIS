@@ -16,9 +16,8 @@
                         v-for="it in morning"
                         :key="it.value"
                         :title= it.title
-                        value ="预约挂号"
+                        :value = registLe[it.registLeID]
                         :id="it.userID"
-                        
                         is-link
                         @click="onCellClick1"
                         />
@@ -30,7 +29,7 @@
                         v-for="it in afternoon"
                         :key="it.value"
                         :title= it.title
-                        value ="预约挂号"
+                        :value = registLe[it.registLeID]
                         is-link
                         :id="it.userID"
                         @click="onCellClick2"
@@ -56,13 +55,17 @@ export default{
       { text: '星期四', value: 4 },
       { text: '星期五', value: 5 },
       { text: '星期六', value: 6 },
-    ];
+        ];
         const activeName = ref(0);
         const day = new Date().getDay();
+        const registLe =[
+          "",  "专家号","普通号"
+        ]
         return{
             option,
             activeName,
             day,
+            registLe,
         }
     },
 
@@ -106,6 +109,8 @@ export default{
                 });
             }
             else{
+                console.log(name);
+                window.sessionStorage.setItem("today",name);
                 this.getDoc(name);
                 
             }
@@ -113,10 +118,12 @@ export default{
         },
         onCellClick1(e){
             this.$router.push({path:"/confirmRegist"});
+            console.log(e);
             console.log(e.currentTarget.id);
             window.sessionStorage.setItem("noon", "上午");
             window.sessionStorage.setItem("userID", e.currentTarget.id);
             window.sessionStorage.setItem("registTime",new Date());
+            window.sessionStorage.setItem("visitDate",new Date(new Date().setDate(new Date().getDate()+(window.sessionStorage.getItem("today")-new Date().getDay()))));
         },
         onCellClick2(e){
             this.$router.push({path:"/confirmRegist"});
@@ -124,7 +131,8 @@ export default{
             window.sessionStorage.setItem("noon", "下午");
             window.sessionStorage.setItem("userID", e.currentTarget.id);
             window.sessionStorage.setItem("registTime",new Date());
-        }
+            window.sessionStorage.setItem("visitDate",new Date(new Date().setDate(new Date().getDate()+(window.sessionStorage.getItem("today")-new Date().getDay()))));
+        },
     },
 
 }

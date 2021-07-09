@@ -50,6 +50,7 @@
     </div>
 </template>
 <script>
+import * as util from '../utils/util'
 import { Toast } from 'vant';
 export default {
     setup() {
@@ -72,6 +73,7 @@ export default {
             age:'',
             idnumber:'',
             homeAddress:'',
+            registInfo:{},
         }
     },
 
@@ -79,10 +81,19 @@ export default {
         onClickLeft(){
             this.$router.push({path:"/register"});
         },
-        onClickBtn(values){
-            console.log(values);
-            Toast('挂号成功');
-        }
+        async onClickBtn(values){
+            this.registInfo = values;
+            this.registInfo["userID"] = window.sessionStorage.getItem("userID");
+            this.registInfo["deptID"] = window.sessionStorage.getItem("deptID");
+            this.registInfo["noon"] = window.sessionStorage.getItem("noon");
+            this.registInfo["registTime"] = util.dateFormat(window.sessionStorage.getItem("registTime"));
+            this.registInfo["visitDate"] = util.dateFormat(window.sessionStorage.getItem("visitDate"));
+            console.log(this.registInfo);
+            const{data:res} = await this.$http.post("addRegister", this.registInfo);
+            if(res=="success"){
+                Toast('挂号成功');
+            }
+        },
     }
 }
 </script>
