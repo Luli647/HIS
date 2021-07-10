@@ -15,7 +15,7 @@ public interface FmeditemDao {
     @Delete("delete from fmeditem where itemcode = #{itemcode}")
     int deleteItem(String itemcode);
 
-    @Update("update fmeditem set itemName = #{itemName}, format = #{format}, price = #{price}")
+    @Update("update fmeditem set itemName = #{itemName}, format = #{format}, price = #{price} where itemCode = #{itemCode}")
     int updateItem(Fmeditem item);
 
     @Insert("insert into fmeditem(itemcode, itemname, format, price)values(#{itemCode}, #{itemName}, #{format}, #{price})")

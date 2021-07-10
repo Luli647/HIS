@@ -191,6 +191,12 @@ export default{
                 this.getItemList();
             })
         },
+        addDialogClose(){
+            this.$refs.addFormRef.resetFields();
+        },
+        updateDialogClose(){
+            this.$refs.updateFormRef.resetFields();
+        },
     }
 
 }

@@ -16,13 +16,10 @@
                 <el-input v-model="loginForm.password" placeholder="输入密码..." type="password"></el-input>
             </el-form-item>
             <!--按钮-->
-            <el-form-item class="btn">
-                <el-button type="primary" @click="login" class="submit-btn">提交</el-button>
+            <el-form-item class="btn" >
+                <el-button type="primary" @click="login" class="submit-btn">登录</el-button>
             </el-form-item>
-            <!--找回密码-->
-                <div class="tiparea">
-                <p>忘记密码？<a>立即找回</a></p>
-                </div>
+            
           </el-form>
       </div>
   </div>
@@ -64,6 +61,8 @@
                             this.$router.push({path:"/home"});
                             if(res1==5)
                             this.$router.push({path:"/drug_mgt"});
+                            if(res1==4)
+                            this.$router.push({path:"/examer"});
                             window.sessionStorage.setItem("user",res.user);
                         }else{
                             this.$message.error("用户名不存在或密码错误！！！");
@@ -101,7 +100,7 @@
 }
 .btn{
     position: absolute;
-    left: 50%;
+    left: 70%;
 }
 .login_form{
     position: absolute;

@@ -52,8 +52,7 @@ public interface UserDao {
     @Select("select * from user u left join scheduleList s on u.userName=s.userName where deptID = #{deptID} and registLeID = #{registLeID}")
     List<User> getUserForSch(User user);
 
-    @Insert("insert into schedulelist(userName, sunMorning, sunAfternoon, monMorning, monAfternoon,tuesMorning, tuesAfternoon,wedsMorning,wedsAfternoon, thursMorning,thursAfternoon, friMorning,friAfternoon, satMorning,satAfternoon) values(#{userName}, #{sunMorning}, #{sunAfternoon}, #{monMorning}, #{monAfternoon},#{tuesMorning}, #{tuesAfternoon},#{wedsMorning},#{wedsAfternoon}, #{thursMorning},#{thursAfternoon}, #{friMorning},#{friAfternoon}, #{satMorning},#{satAfternoon})")
-    @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
+    @Update("update schedulelist set sunMorning =#{sunMorning}, sunAfternoon = #{sunAfternoon}, monMorning = #{monMorning}, monAfternoon = #{monAfternoon},tuesMorning = #{tuesMorning}, tuesAfternoon = #{tuesAfternoon},wedsMorning=#{wedsMorning},wedsAfternoon = #{wedsAfternoon}, thursMorning=#{thursMorning},thursAfternoon=#{thursAfternoon}, friMorning=#{friMorning},friAfternoon=#{friAfternoon}, satMorning=#{satMorning},satAfternoon=#{satAfternoon} where userName = #{userName}")
     int addSchedule(User doc);
 
     //挂号功能
