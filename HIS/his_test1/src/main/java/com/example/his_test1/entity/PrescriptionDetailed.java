@@ -12,4 +12,7 @@ public class PrescriptionDetailed {
 	private String frequency;
 	private float amount;
 	private int state;
+	private String drugsName;
+	private String drugsFormat;
+	private float drugsPrice;
 }

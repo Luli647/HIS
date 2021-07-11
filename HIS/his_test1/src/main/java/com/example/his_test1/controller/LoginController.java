@@ -26,6 +26,7 @@ public class LoginController {
         //用户存在
         res.put("flag", flag);
         res.put("user", user);
+        res.put("userid",userDao.getUser(user.getUserName()));
         String res_json = JSON.toJSONString(res);
         return res_json;
     }

@@ -54,6 +54,7 @@
                     if (!valid) return;
                     else{
                         const {data:res}=await this.$http.post("login", this.loginForm);
+                        console.log(res);
                         if( res.flag =="correct"){
                             this.$message.success("操作成功！！");
                             const{ data: res1 } = await this.$http.post("getUserType", this.loginForm);
@@ -63,7 +64,10 @@
                             this.$router.push({path:"/drug_mgt"});
                             if(res1==4)
                             this.$router.push({path:"/examer"});
+                            if(res1==3)
+                            this.$router.push({path:"/clinic_doc"});
                             window.sessionStorage.setItem("user",res.user);
+                            window.sessionStorage.setItem("userid",JSON.stringify(res.userid));
                         }else{
                             this.$message.error("用户名不存在或密码错误！！！");
                         }

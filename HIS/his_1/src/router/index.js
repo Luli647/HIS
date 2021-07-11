@@ -31,6 +31,11 @@ const routes =  [
     name: 'exam',
     component: () => import(/* webpackChunkName: "about" */ '../views/Examer.vue')
   },
+  {
+    path: '/clinic_doc',
+    name: 'docter',
+    component: () => import(/* webpackChunkName: "about" */ '../views/ClinicDoctor.vue')
+  },
 ]
 
 const router = createRouter({

@@ -28,4 +28,6 @@ public interface PatientCheckDao {
 
     @Update("update medicalrecord set checkresult = #{results} where id = #{medicalID}")
     int addResults(String results, int medicalID);
+
+    
 }
