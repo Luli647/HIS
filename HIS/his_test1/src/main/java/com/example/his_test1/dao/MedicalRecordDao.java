@@ -45,7 +45,7 @@ public interface MedicalRecordDao {
             +"<if test=\"physique != null\"> physique = #{physique},</if>"
             +"<if test=\"proposal != null\"> proposal = #{proposal},</if>"
             +"<if test=\"careful != null\"> careful = #{careful},</if>"
-            +"<if test=\"caseState != null\"> caseState = #{caseState},</if>"
+            +"<if test=\"caseState != null\"> caseState = #{caseState}</if>"
             +" where caseNumber = #{caseNumber}"
             +"</script>")
     void updateMedicalRecord(MedicalRecord medicalRecord);

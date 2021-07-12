@@ -20,64 +20,32 @@ public class ClinicDoctorController {
 
     @RequestMapping("/clinicDoctor/patientbyUserID")
     public String getPatientListbyUserID(@RequestBody String str){
-        String str2="";
-        if(str != null && !"".equals(str)){
-            for(int i=0;i<str.length();i++){
-                if(str.charAt(i)>=48 && str.charAt(i)<=57){
-                    str2+=str.charAt(i);
-                }
-            }
-        }
-
-        List<Register> registers =  clinicDoctorService.findRegisterByUserID(Integer.parseInt(str2));
+        int num = stringToInteger(str);
+        List<Register> registers =  clinicDoctorService.findRegisterByUserID(num);
         String res_string = JSON.toJSONString(registers);
         return res_string;
     }
 
     @RequestMapping("/clinicDoctor/patientDonebyUserID")
     public String getPatientDoneListbyUserID(@RequestBody String str){
-        String str2="";
-        if(str != null && !"".equals(str)){
-            for(int i=0;i<str.length();i++){
-                if(str.charAt(i)>=48 && str.charAt(i)<=57){
-                    str2+=str.charAt(i);
-                }
-            }
-
-        }
-        List<Register> registers =  clinicDoctorService.findRegisterDoneByUserID(Integer.parseInt(str2));
+        int num = stringToInteger(str);
+        List<Register> registers =  clinicDoctorService.findRegisterDoneByUserID(num);
         String res_string = JSON.toJSONString(registers);
         return res_string;
     }
 
     @RequestMapping("/clinicDoctor/patientbyDeptID")
     public String getPatientListbyDeptID(@RequestBody String str){
-        String str2="";
-        if(str != null && !"".equals(str)){
-            for(int i=0;i<str.length();i++){
-                if(str.charAt(i)>=48 && str.charAt(i)<=57){
-                    str2+=str.charAt(i);
-                }
-            }
-
-        }
-        List<Register> registers =  clinicDoctorService.findRegisterByDeptID(Integer.parseInt(str2));
+        int num = stringToInteger(str);
+        List<Register> registers =  clinicDoctorService.findRegisterByDeptID(num);
         String res_string = JSON.toJSONString(registers);
         return res_string;
     }
 
     @RequestMapping("/clinicDoctor/patientDonebyDeptID")
     public String getPatientDoneListbyDeptID(@RequestBody String str){
-        String str2="";
-        if(str != null && !"".equals(str)){
-            for(int i=0;i<str.length();i++){
-                if(str.charAt(i)>=48 && str.charAt(i)<=57){
-                    str2+=str.charAt(i);
-                }
-            }
-
-        }
-        List<Register> registers =  clinicDoctorService.findRegisterDoneByDeptID(Integer.parseInt(str2));
+        int num = stringToInteger(str);
+        List<Register> registers =  clinicDoctorService.findRegisterDoneByDeptID(num);
         String res_string = JSON.toJSONString(registers);
         return res_string;
     }
@@ -91,7 +59,6 @@ public class ClinicDoctorController {
                     str2+=str.charAt(i);
                 }
             }
-
         }
         MedicalRecord medicalRecords =  clinicDoctorService.findMedicalRecordbyCaseNumber(str2);
         String res_string = JSON.toJSONString(medicalRecords);
@@ -116,103 +83,72 @@ public class ClinicDoctorController {
 
     @RequestMapping("/clinicDoctor/medicalDiseasebyMedicalID")
     public String getmedicalDiseasebyMedicalID(@RequestBody String str){
-        String str2="";
-        if(str != null && !"".equals(str)){
-            for(int i=0;i<str.length();i++){
-                if(str.charAt(i)>=48 && str.charAt(i)<=57){
-                    str2+=str.charAt(i);
-                }
-            }
-        }
-        List<MedicalDisease> medicalDiseases =  clinicDoctorService.findmedicalDiseasebyMedicalID(Integer.parseInt(str2));
+        int num = stringToInteger(str);
+        List<MedicalDisease> medicalDiseases =  clinicDoctorService.findmedicalDiseasebyMedicalID(num);
         String res_string = JSON.toJSONString(medicalDiseases);
         return res_string;
     }
 
     @RequestMapping("/clinicDoctor/checkApplybyMedicalID")
     public String getCheckApplybyMedicalID(@RequestBody String str){
-        String str2="";
-        if(str != null && !"".equals(str)){
-            for(int i=0;i<str.length();i++){
-                if(str.charAt(i)>=48 && str.charAt(i)<=57){
-                    str2+=str.charAt(i);
-                }
-            }
-
-        }
-        List<CheckApply> checkApplies =  clinicDoctorService.findCheckApplybyMedicalID(Integer.parseInt(str2));
+        int num = stringToInteger(str);
+        List<CheckApply> checkApplies =  clinicDoctorService.findCheckApplybyMedicalID(num);
         String res_string = JSON.toJSONString(checkApplies);
         return res_string;
     }
 
     @RequestMapping("/clinicDoctor/checkTemplatebyUserID")
     public String getCheckTemplatebyUserID(@RequestBody String str){
-        String str2="";
-        if(str != null && !"".equals(str)){
-            for(int i=0;i<str.length();i++){
-                if(str.charAt(i)>=48 && str.charAt(i)<=57){
-                    str2+=str.charAt(i);
-                }
-            }
-
-        }
-        List<CheckTemplate> checkTemplates =  clinicDoctorService.findCheckTemplateByUserID(Integer.parseInt(str2));
+        int num = stringToInteger(str);
+        List<CheckTemplate> checkTemplates =  clinicDoctorService.findCheckTemplateByUserID(num);
         String res_string = JSON.toJSONString(checkTemplates);
         return res_string;
     }
 
-    @RequestMapping("/clinicDoctor/prescriptionbyUserID")
-    public String getPrescriptionbyUserID(@RequestBody String str){
-        String str2="";
-        if(str != null && !"".equals(str)){
-            for(int i=0;i<str.length();i++){
-                if(str.charAt(i)>=48 && str.charAt(i)<=57){
-                    str2+=str.charAt(i);
-                }
-            }
-
-        }
-        List<Prescription> prescriptions =  clinicDoctorService.findPrescriptionbyUserID(Integer.parseInt(str2));
+    @RequestMapping("/clinicDoctor/prescriptionbyMedicalID")
+    public String getPrescriptionbyMedicalID(@RequestBody String str){
+        int num = stringToInteger(str);
+        List<Prescription> prescriptions =  clinicDoctorService.findPrescriptionbyMedicalID(num);
         String res_string = JSON.toJSONString(prescriptions);
         return res_string;
     }
 
     @RequestMapping("/clinicDoctor/prescriptionDetailedbyPrescriptionID")
     public String getPrescriptionDetailsbyPrescriptionID(@RequestBody String str){
-        String str2="";
-        if(str != null && !"".equals(str)){
-            for(int i=0;i<str.length();i++){
-                if(str.charAt(i)>=48 && str.charAt(i)<=57){
-                    str2+=str.charAt(i);
-                }
-            }
-
-        }
-        System.out.println(str2);
-        List<PrescriptionDetailed> prescriptionDetaileds =  clinicDoctorService.findPrescriptionDetailsbyPrescriptionID(Integer.parseInt(str2));
+        int num = stringToInteger(str);
+        List<PrescriptionDetailed> prescriptionDetaileds =  clinicDoctorService.findPrescriptionDetailsbyPrescriptionID(num);
         String res_string = JSON.toJSONString(prescriptionDetaileds);
-        System.out.println(res_string);
         return res_string;
     }
 
     @RequestMapping("/clinicDoctor/drugsTemplatebyUserID")
     public String getDrugsTemplatebyUserID(@RequestBody String str){
-        String str2="";
-        if(str != null && !"".equals(str)){
-            for(int i=0;i<str.length();i++){
-                if(str.charAt(i)>=48 && str.charAt(i)<=57){
-                    str2+=str.charAt(i);
-                }
-            }
-
-        }
-        List<DrugsTemplate> drugsTemplates =  clinicDoctorService.findDrugsTemplateByUserID(Integer.parseInt(str2));
+        int num = stringToInteger(str);
+        List<DrugsTemplate> drugsTemplates =  clinicDoctorService.findDrugsTemplateByUserID(num);
         String res_string = JSON.toJSONString(drugsTemplates);
         return res_string;
     }
 
     @RequestMapping("/clinicDoctor/drugsDetailedbyDrugsTempID")
     public String getDrugsDetailedbyDrugsTempID(@RequestBody String str){
+        int num = stringToInteger(str);
+        List<DrugsDetailed> drugsDetaileds =  clinicDoctorService.findDrugsDetailedbyDrugsTempID(num);
+        String res_string = JSON.toJSONString(drugsDetaileds);
+        return res_string;
+    }
+
+    @RequestMapping("/clinicDoctor/deleteCheckApplybyID")
+    public void deleteCheckApplybyID(@RequestBody String str){
+        int num = stringToInteger(str);
+        clinicDoctorService.deleteCheckApplybyID(num);
+    }
+
+    @RequestMapping("/clinicDoctor/addCheckApply")
+    public void addCheckApply(@RequestBody CheckApply checkApply){
+        clinicDoctorService.addCheckApply(checkApply);
+    }
+
+    public int stringToInteger(String str){
         String str2="";
         if(str != null && !"".equals(str)){
             for(int i=0;i<str.length();i++){
@@ -222,9 +158,6 @@ public class ClinicDoctorController {
             }
 
         }
-        List<DrugsDetailed> drugsDetaileds =  clinicDoctorService.findDrugsDetailedbyDrugsTempID(Integer.parseInt(str2));
-        String res_string = JSON.toJSONString(drugsDetaileds);
-        System.out.println(res_string);
-        return res_string;
+        return Integer.parseInt(str2);
     }
 }

@@ -70,8 +70,9 @@ public class ClinicDoctorService {
         return checkTemplateDao.findCheckTemplateByUserID(UserID);
     }
 
-    public List<Prescription> findPrescriptionbyUserID(int UserID) {
-        return prescriptionDAO.findByUserID(UserID);
+    public List<Prescription> findPrescriptionbyMedicalID(int MedicalID) {
+
+        return prescriptionDAO.findByMedicalID(MedicalID);
     }
 
     public List<PrescriptionDetailed> findPrescriptionDetailsbyPrescriptionID(int PrescriptionID) {
@@ -84,5 +85,13 @@ public class ClinicDoctorService {
 
     public List<DrugsDetailed> findDrugsDetailedbyDrugsTempID(int DrugsTempID) {
         return drugsDetailedDao.findDrugsDetailedbyDrugsTempID(DrugsTempID);
+    }
+
+    public void deleteCheckApplybyID(int ID){
+        checkApplyDao.deleteCheckApplybyID(ID);
+    }
+
+    public void addCheckApply(CheckApply checkApply){
+        checkApplyDao.addCheckApply(checkApply);
     }
 }

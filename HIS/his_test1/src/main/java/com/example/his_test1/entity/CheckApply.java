@@ -26,6 +26,8 @@ public class CheckApply {
     @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date resultTime;
     private int state;
-    private int price;
+    private float price;
     private int deptID;
+    private int num;
+    private int recordType;
 }

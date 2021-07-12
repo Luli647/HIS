@@ -10,7 +10,7 @@ const app = createApp(App)
 
 app.config.globalProperties.$http=axios;
 //设置访问根路径,后端路径
-axios.defaults.baseURL ="http://localhost:9000"
+axios.defaults.baseURL ="http://localhost:9010"
 app.use(ElementPlus)
 app.use(store)
 app.use(router)

@@ -276,17 +276,19 @@
             <el-container direction="vertical" style="width: 65%">
               <div align="center" style="width:100%;height:30px;background-color:aliceblue" >
                 
-                <el-button class="button" type="text" @click="addCheck">新增项目</el-button>
-                <el-link icon="el-icon-remove" style="color: cornflowerblue;margin-left:3%">删除项目</el-link>
-                <el-link icon="el-icon-success" style="color: cornflowerblue;margin-left:3%">开立项目</el-link>
-                <el-link icon="el-icon-delete" style="color: cornflowerblue;margin-left:3%">作废项目</el-link>
-                <el-link icon="el-icon-circle-check" style="color: cornflowerblue;margin-left:3%">另存组套</el-link>
-                <el-link icon="el-icon-circle-plus-outline" style="color: cornflowerblue;margin-left:3%">刷新</el-link>
+                <el-button type="text" icon="el-icon-circle-plus" @click="addCheck" style="color: cornflowerblue;margin-left:50%">新增项目</el-button>
+                <el-button type="text" icon="el-icon-remove" @click="deleteMultipleCheckApply" style="color: cornflowerblue;margin-left:3%">删除项目</el-button>
+                <!--
+                <el-button type="text" icon="el-icon-success" style="color: cornflowerblue;margin-left:3%">开立项目</el-button>
+                <el-button type="text" icon="el-icon-delete" style="color: cornflowerblue;margin-left:3%">作废项目</el-button>
+                <el-button type="text" icon="el-icon-circle-check" style="color: cornflowerblue;margin-left:3%">另存组套</el-button>
+                <el-button type="text" icon="el-icon-circle-plus-outline" style="color: cornflowerblue;margin-left:3%">刷新</el-button>
+                -->
               </div>
 
               <div align="left">
                 <el-tag style="height:30px;margin-top:5px">本项目金额合计：</el-tag>
-                <el-tag ref="jcBalance" type="warning" style="height:30px;margin-left:5px">0元</el-tag>
+                <el-tag id="checkApplyBalanceLabel" type="warning" style="height:30px;margin-left:5px">0元</el-tag>
               </div>
 
               <el-dialog v-model="addCheckDialog" style="width:70%">
@@ -341,18 +343,18 @@
                   :data="checkApply"
                   tooltip-effect="dark"
                   style="width: 100%"
-                  @selection-change="handleSelectionChange">
+                  @selection-change="checkApplyChange">
                 <el-table-column
                     type="selection"
                     width="55">
                 </el-table-column>
                 <el-table-column
-                    prop="id"
+                    prop="itemID"
                     label="项目ID"
                     width="120%">
                 </el-table-column>
                 <el-table-column
-                    prop="itemName"
+                    prop="name"
                     label="项目名称"
                     width="180%">
                 </el-table-column>
@@ -362,7 +364,7 @@
                     width="120%">
                 </el-table-column>
                 <el-table-column
-                    prop="recordType"
+                    prop="state"
                     label="执行状态"
                     width="120%">
                 </el-table-column>
@@ -372,17 +374,13 @@
                     width="100%">
                 </el-table-column>
                 <el-table-column
-                    label="操作"
-                    width="100%">
-                    <el-button type="text" @click="addItemConfirm">添加项目</el-button>
-                </el-table-column>
-                <el-table-column
                     label="检查结果"
                     width="120%">
-                  <el-button type="text" @click="showResult">查看详细</el-button>
+                  <el-button disabled type="text" @click="showResult">查看详细</el-button>
                 </el-table-column>
               </el-table>
             </el-container>
+
             <el-container style="width: 33%;height:50px;margin-left:2%">
               <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
                 <el-tab-pane label="常用模板" name="first">
@@ -410,7 +408,7 @@
           <el-container direction="horizontal">
             <el-container direction="vertical" style="width: 65%">
               <div align="center" style="width:100%;height:30px;background-color:aliceblue" >
-                <el-link icon="el-icon-circle-plus" style="color: cornflowerblue;margin-left:10%;margin-top:5px">新增项目</el-link>
+                <el-button icon="el-icon-circle-plus" style="color: cornflowerblue;margin-left:10%;margin-top:5px">新增项目</el-button>
                 <el-link icon="el-icon-remove" style="color: cornflowerblue;margin-left:3%">删除项目</el-link>
                 <el-link icon="el-icon-success" style="color: cornflowerblue;margin-left:3%">开立项目</el-link>
                 <el-link icon="el-icon-delete" style="color: cornflowerblue;margin-left:3%">作废项目</el-link>
@@ -567,22 +565,20 @@
         </el-tab-pane>
         -->
 
-        <el-tab-pane label="门诊确诊*"></el-tab-pane>
-
         <el-tab-pane label="成药处方">
           <div align="left">
-            <el-tag align="left" style="height:30px;margin-top:5px">门诊诊断：</el-tag>
+            <el-tag align="left" style="height:30px">门诊诊断：</el-tag>
             <el-tag ref="diagnose" v-show="false" type="info" style="height:30px;margin-left:5px"></el-tag>
           </div>
 
           <div align="center" style="width:100%;height:30px;background-color:aliceblue" >
-            <el-link icon="el-icon-circle-plus" style="color: cornflowerblue;margin-left:20%;margin-top:5px">增方</el-link>
-            <el-link icon="el-icon-remove" style="color: cornflowerblue;margin-left:3%">删方</el-link>
-            <el-link icon="el-icon-success" style="color: cornflowerblue;margin-left:3%">开立</el-link>
-            <el-link icon="el-icon-delete" style="color: cornflowerblue;margin-left:3%">作废</el-link>
-            <el-link icon="el-icon-circle-plus-outline" style="color: cornflowerblue;margin-left:3%">刷新</el-link>
-            <el-link icon="el-icon-circle-plus-outline" style="color: cornflowerblue;margin-left:20%;margin-top:5px">增药</el-link>
-            <el-link icon="el-icon-remove-outline" style="color: cornflowerblue;margin-left:3%">删药</el-link>
+            <el-button type="text" icon="el-icon-circle-plus" style="color: cornflowerblue;margin-left:20%">增方</el-button>
+            <el-button type="text" icon="el-icon-remove" style="color: cornflowerblue;margin-left:3%">删方</el-button>
+            <el-button type="text" icon="el-icon-success" style="color: cornflowerblue;margin-left:3%">开立</el-button>
+            <el-button type="text" icon="el-icon-delete" style="color: cornflowerblue;margin-left:3%">作废</el-button>
+            <el-button type="text" icon="el-icon-circle-plus-outline" style="color: cornflowerblue;margin-left:3%">刷新</el-button>
+            <el-button type="text" icon="el-icon-circle-plus-outline" style="color: cornflowerblue;margin-left:20%;margin-top:5px">增药</el-button>
+            <el-button type="text" icon="el-icon-remove-outline" style="color: cornflowerblue;margin-left:3%">删药</el-button>
           </div>
 
           <el-container direction="horizontal" style="width:100%">
@@ -614,7 +610,7 @@
             <el-container direction="vertical" style="width:73%;margin-left: 2%">
               <div align="left">
                 <el-tag style="height:30px;margin-top:5px">本处方金额合计：</el-tag>
-                <el-tag type="warning" style="height:30px;margin-left:5px">0元</el-tag>
+                <el-tag id="prescriptionDetailedBalanceLabel" type="warning" style="height:30px;margin-left:5px">0元</el-tag>
               </div>
               <el-table
                   ref="multipleTable"
@@ -670,7 +666,7 @@
               <el-tab-pane label="处方模板">
                 <el-container direction="horizontal" style="width:100%">
                   <el-container direction="vertical" style="width:35%;border:1px solid #eee ">
-                    <el-form :inline="true" :model="cfmb" class="demo-form-inline" style="margin-top:40px;margin-left:-20%">
+                    <el-form :inline="true" :model="cfmb" class="demo-form-inline" style="margin-top:40px;margin-left:10%">
                       <el-form-item label="名称：">
                         <el-input v-model="cfmb.name" placeholder="输入模板名称"></el-input>
                       </el-form-item>
@@ -745,9 +741,11 @@
                 </el-container>
               </el-tab-pane>
 
+              <!--
               <el-tab-pane label="常用药品*"></el-tab-pane>
               <el-tab-pane label="建议方案*"></el-tab-pane>
               <el-tab-pane label="历史处方*"></el-tab-pane>
+              -->
             </el-tabs>
           </el-container>
         </el-tab-pane>
@@ -935,9 +933,10 @@
             </el-tabs>
           </el-container>
         </el-tab-pane>
-        -->
 
+        <el-tab-pane label="门诊确诊*"></el-tab-pane>
         <el-tab-pane label="费用查询*"></el-tab-pane>
+        -->
       </el-tabs>
 
       <el-container style="height: 100%;"></el-container>
@@ -968,10 +967,12 @@ export default defineComponent ({
       ksyzhz:[],
       patientDetails:{},
       medicalRecordForm: {},
-      medicalID: 0,
+      medicalRecordFormID: 0,
       medicalDisease:[],
       medicalDiseaseChinese:[],
       checkApply:[],
+      checkApplyTemp:{},
+      MultipleCheckApplyChosen:'',
       checkTemplate:[],
       prescription:[],
       prescriptionChosen:{},
@@ -984,6 +985,8 @@ export default defineComponent ({
       activeName: 'first',
       currentRow: null,
       radio: 1,
+      checkApplyBalance: 0,
+      prescriptionDetailedBalance: 0,
 
       jysq:[],
       jycymb:[],
@@ -1016,7 +1019,6 @@ export default defineComponent ({
   },
   created() {
     component = this;
-    console.log("！！！！！！！！！！！")
     this.User = JSON.parse(window.sessionStorage.getItem('userid'));
     this.UserID = parseInt(JSON.stringify(this.User.id));
     this.DeptID = parseInt(JSON.stringify(this.User.DeptID));
@@ -1049,20 +1051,42 @@ export default defineComponent ({
     searchPatient(){
       this.inputPatient;
     },
-    async getPatientRecord () {
+    async getMedicalRecordbyCaseNumber(){
       const { data: res } = await this.$http.post("/clinicDoctor/medicalRecordbyCaseNumber",{CaseNumber: this.patientDetails.caseNumber})
       this.medicalRecordForm = null;
       this.medicalRecordForm = res;
-      const { data: res2 } = await this.$http.post("/clinicDoctor/medicalDiseasebyMedicalID", this.medicalRecordForm.id)
-      this.medicalDisease = res2;
-      const { data: res3 } = await this.$http.post("/clinicDoctor/checkApplybyMedicalID", this.medicalRecordForm.id)
-      this.checkApply = res3;
-      const { data: res4 } = await this.$http.post("/clinicDoctor/checkTemplatebyUserID", this.UserID)
-      this.checkTemplate = res4;
-      const { data: res5 } = await this.$http.post("/clinicDoctor/prescriptionbyUserID", this.UserID)
-      this.prescription = res5;
-      const { data: res6 } = await this.$http.post("/clinicDoctor/drugsTemplatebyUserID", this.UserID)
-      this.drugsTemplate = res6;
+      this.medicalRecordFormID = this.medicalRecordForm.id;
+    },
+    async getMedicalDiseasebyMedicalID(){
+      const { data: res } = await this.$http.post("/clinicDoctor/medicalDiseasebyMedicalID", {medicalID: this.medicalRecordFormID})
+      this.medicalDisease = res;
+    },
+    async getCheckApplybyMedicalID(){
+      const { data: res } = await this.$http.post("/clinicDoctor/checkApplybyMedicalID", {medicalID: this.medicalRecordFormID})
+      this.checkApply = {};
+      this.checkApply = res;
+      console.log(this.checkApply)
+    },
+    async getCheckTemplatebyUserID(){
+      const { data: res } = await this.$http.post("/clinicDoctor/checkTemplatebyUserID", this.UserID)
+      this.checkTemplate = res;
+    },
+    async getPrescriptionbyMedicalID(){
+      const { data: res } = await this.$http.post("/clinicDoctor/prescriptionbyMedicalID", this.medicalRecordFormID)
+      this.prescription = res;
+    },
+    async getDrugsTemplatebyUserID(){
+      const { data: res } = await this.$http.post("/clinicDoctor/drugsTemplatebyUserID", this.UserID)
+      this.drugsTemplate = res;
+    },
+    getPatientRecord () {
+      this.getMedicalRecordbyCaseNumber().then(() => {
+            this.getMedicalDiseasebyMedicalID();
+            this.getCheckApplybyMedicalID().then(()=>{ this.updateCheckApplyBalance() });
+            this.getPrescriptionbyMedicalID();
+      })
+      this.getCheckTemplatebyUserID();
+      this.getDrugsTemplatebyUserID();
     },
     async updateMedicalRecord () {
       const { data: res } = this.$http.post("/clinicDoctor/updateMedicalRecord", this.medicalRecordForm);
@@ -1077,7 +1101,6 @@ export default defineComponent ({
         this.medicalRecordForm.caseNumber=this.patientDetails.caseNumber;
         this.medicalRecordForm.registID=this.patientDetails.id;
         this.medicalRecordForm.diagnosis = this.medicalDisease[0].diseaseCode;
-        console.log(this.medicalRecordForm);
         this.updateMedicalRecord()
             .then(() => {
               this.$message({
@@ -1112,22 +1135,66 @@ export default defineComponent ({
     },
     prescriptionChange(val){
       this.prescriptionChosen = val;
-      this.getPrescriptionDetailed();
+      this.getPrescriptionDetailed().then(()=>{
+        this.updatePrescriptionDetailedBalance();
+      });
     },
     async getPrescriptionDetailed(){
-      const { data: res } = this.$http.post("/clinicDoctor/prescriptionDetailedbyPrescriptionID", this.prescriptionChosen.id);
+      const { data: res } = await this.$http.post("/clinicDoctor/prescriptionDetailedbyPrescriptionID", this.prescriptionChosen.id);
       this.prescriptionDetailed = res;
     },
     drugsTemplateChange(val){
+      this.setDrugsTemplate(val)
+          .then(()=>{
+            this.getDrugsDetailed();
+      })
+    },
+    async setDrugsTemplate(val){
       this.drugsTemplateChosen = val;
-      this.getDrugsDetailed();
     },
     async getDrugsDetailed(){
-      const { data: res } = this.$http.post("/clinicDoctor/drugsDetailedbyDrugsTempID", this.drugsTemplateChosen.id);
+      const { data: res } = await this.$http.post("/clinicDoctor/drugsDetailedbyDrugsTempID", this.drugsTemplateChosen.id);
       this.drugsDetailed = res;
+      console.log(res);
     },
     onSubmit() {
       console.log('submit!');
+    },
+    checkApplyChange(val){
+      this.MultipleCheckApplyChosen = val;
+    },
+    deleteMultipleCheckApply(){
+      const length = this.MultipleCheckApplyChosen.length;
+      if(length > 0){
+        this.$confirm('确认删除选中的项目？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          for (let i = 0; i < length; i++) {
+            this.$http.post("/clinicDoctor/deleteCheckApplybyID",this.MultipleCheckApplyChosen[i].id);
+          }
+        }).then(()=>{
+          this.getCheckApplybyMedicalID()
+              .then(()=>{
+            this.updateCheckApplyBalance();
+          })
+        })
+      }
+    },
+    updateCheckApplyBalance(){
+      this.checkApplyBalance = 0;
+      for (let i = 0; i < this.checkApply.length; i++) {
+        this.checkApplyBalance += this.checkApply[i].price;
+      }
+      document.getElementById("checkApplyBalanceLabel").innerHTML= this.checkApplyBalance + "元";
+    },
+    updatePrescriptionDetailedBalance(){
+      this.prescriptionDetailedBalance = 0;
+      for (let i = 0; i < this.prescriptionDetailed.length; i++) {
+        this.prescriptionDetailedBalance += this.prescriptionDetailed[i].drugsPrice;
+      }
+      document.getElementById("prescriptionDetailedBalanceLabel").innerHTML= this.prescriptionDetailedBalance + "元";
     },
     handleSelectionChange(val) {
       this.multipleSelection = val;
@@ -1179,11 +1246,33 @@ export default defineComponent ({
       const {data: res} = await this.$http.get("/allItems",{params:this.queryInfo});
       this.checkItemData = res.list;
     },
-    async addCheckItem(itemCode){
-      const {data: res} = await this.$http.get("getItem?itemCode="+itemCode);
-      console.log(res);
-      this.checkApply.push(res);
-      this.total = res.total;
+    async addCheckApply(){
+      const {data: res} = await this.$http.post("/clinicDoctor/addCheckApply",this.checkApplyTemp)
+    },
+    async addCheckApplybyFmeditemItemCode(itemCode){
+      const {data: res} = await this.$http.get("addCheckApplybyFmeditemItemCode?itemCode="+itemCode);
+      this.checkApplyTemp = res
+    },
+    addCheckItem(itemCode){
+      this.addCheckApplybyFmeditemItemCode(itemCode)
+          .then(()=>{
+            this.checkApplyTemp.medicalID = this.medicalRecordFormID;
+            this.checkApplyTemp.registID = this.patientDetails.id;
+            this.checkApplyTemp.doctorID = this.UserID;
+            this.checkApply.push(this.checkApplyTemp);
+          }).then(()=>{
+            this.addCheckApply().then(() => {
+                  this.$message({
+                    type: 'success',
+                    message: '已成功添加'
+                  });
+                  this.getCheckApplybyMedicalID();
+                }).then(()=>{
+                  this.updateCheckApplyBalance();
+            })
+          })
+
+
     },
     async addItemConfirm(){
 
